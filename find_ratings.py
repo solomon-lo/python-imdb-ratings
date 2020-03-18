@@ -20,9 +20,9 @@ for film in filmswe:
     print(os.path.splitext(film)[0])
 
 for line in films:
-    x = line.split(", ")
+    # x = line.split(", ")
     title = line.lower()
-    release = x[1]
+    # release = x[1]
     query = "+".join(title.split()) 
     URL = "https://www.imdb.com/search/title/?title=" + query
     print(URL)
@@ -30,6 +30,13 @@ for line in films:
     try: 
         response = s.get(URL)
 
-        #getting contect from IMDB Website
         content = response.content
-        print(content)
+
+
+        soup = BeautifulSoup(response.content, features="html.parser") 
+        containers = soup.find_all("div", class_="lister-item-content")
+        for result in containers:
+            name1 = result.h3.a.text
+            print(name1)
+            name = result.h3.a.text.lower()
+            print(name)
