@@ -20,13 +20,10 @@ for film in filmswe:
     print(os.path.splitext(film)[0])
 
 for line in films:
-    # x = line.split(", ")
     title = line.lower()
-    # release = x[1]
     query = "+".join(title.split())
     URL = "https://www.imdb.com/search/title/?title=" + query
     print(URL)
-    # print(release)
     try:
         response = s.get(URL)
         content = response.content
@@ -46,3 +43,7 @@ for line in films:
                 genre = genre.contents[0]
     except Exception:
         print("Inputted title wasn't able to be found")
+
+df = pd.DataFrame({'Film Name':names,'Rating':ratings,'Genre':genres}) 
+
+df.to_csv('film_ratings.csv', index=False, encoding='utf-8')
